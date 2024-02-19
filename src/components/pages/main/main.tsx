@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import OfferCard from '../../components/OfferCard/OfferCard';
+import Header from '../../Header/Header';
+import OfferCard from '../../OfferCard/OfferCard';
 
 export default function Main () {
   return(
