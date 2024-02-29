@@ -1,8 +1,8 @@
 import React from 'react';
-import {OfferCard} from '../../types/types';
+import {OfferCardType} from '../../types/types';
 import {AppRoute, STARS_COUNT, MAX_PERCENT_STARS_WIDTH} from '../../const';
 
-export default function OfferCard(props: OfferCard): JSX.Element {
+export default function OfferCard(props: OfferCardType): JSX.Element {
   const handleMouseMove = () => {
     props.onMouseMove(props.id);
   };
