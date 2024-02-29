@@ -1,13 +1,13 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
-import Login from '../pages/login/login';
-import Main from '../pages/main/main';
-import Favorites from '../pages/favorites/Favorites';
-import Room from '../pages/room/Room';
-import NotFound from '../pages/not-found/not-found';
+import Login from './pages/login/login';
+import Main from './pages/main/main';
+import Favorites from './pages/favorites/Favorites';
+import Room from './pages/room/room';
+import NotFound from './pages/not-found/not-found';
 
-import {AppRoute, AuthorizationStatus} from '../../const';
-import PrivateRoute from '../private-route/private-route';
+import {AppRoute, AuthorizationStatus} from './const';
+import PrivateRoute from './components/private-route/private-route';
 
 function App(): JSX.Element {
   return (
