@@ -9,13 +9,15 @@ import NotFound from './pages/not-found/not-found';
 import {AppRoute, AuthorizationStatus} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
+import {Offers} from './mocks/offers';
+
 function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main/>}
+          element={<Main offers={Offers}/>}
         />
         <Route
           path={AppRoute.Login}

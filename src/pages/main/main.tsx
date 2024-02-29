@@ -1,8 +1,13 @@
 import React from 'react';
 import Header from '../../components/header/header';
-import OfferCard from '../../components/offer-card/offer-card';
+import OfferList from '../../components/offer-list/offer-list';
+import {Offer} from '../../types/types';
 
-export default function Main () {
+interface IMainProps {
+  offers: Array<Offer>;
+}
+
+export default function Main (props: IMainProps) {
   return(
     <>
       <div style={{display: 'none'}}>
@@ -80,42 +85,7 @@ export default function Main () {
                   </ul>
                 </form>
                 <div className={'cities__places-list places__list tabs__content'}>
-                  <OfferCard
-                    image={'img/apartment-01.jpg'}
-                    price={120}
-                    name={'Beautiful & luxurious apartment at great location'}
-                    type={'Apartment'}
-                    premium
-                  />
-
-                  <OfferCard
-                    image={'img/room.jpg'}
-                    price={80}
-                    name={'Wood and stone place'}
-                    type={'Private room'}
-                  />
-
-                  <OfferCard
-                    image={'img/apartment-02.jpg'}
-                    price={132}
-                    name={'Canal View Prinsengracht'}
-                    type={'Apartment'}
-                  />
-
-                  <OfferCard
-                    image={'img/apartment-03.jpg'}
-                    price={180}
-                    name={'Nice, cozy, warm big bed apartment'}
-                    type={'Apartment'}
-                    premium
-                  />
-
-                  <OfferCard
-                    image={'img/room.jpg'}
-                    price={80}
-                    name={'Wood and stone place'}
-                    type={'Private room'}
-                  />
+                  <OfferList offers={props.offers}/>
                 </div>
               </section>
               <div className={'cities__right-section'}>

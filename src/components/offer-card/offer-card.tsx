@@ -1,25 +1,30 @@
 import React from 'react';
+import {OfferCard} from '../../types/types';
+import {AppRoute, STARS_COUNT, MAX_PERCENT_STARS_WIDTH} from '../../const';
 
-interface IOfferCardProps {
-  image: string;
-  price: number;
-  // rating?: string;
-  name: string;
-  type: string;
-  premium?: boolean;
-}
+export default function OfferCard(props: OfferCard): JSX.Element {
+  const handleMouseMove = () => {
+    props.onMouseMove(props.id);
+  };
 
-export default function OfferCard(props: IOfferCardProps) {
+  const onMouseLeave = () => {
+    props.onMouseLeave();
+  };
+
   return(
-    <article className={'cities__place-card place-card'}>
-      {props.premium && (
+    <article
+      className={'cities__place-card place-card'}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
+      {props.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className={'cities__image-wrapper place-card__image-wrapper'}>
         <a href={'#'}>
-          <img className={'place-card__image'} src={props.image} width={'260'} height={'200'} alt={'Place image'} />
+          <img className={'place-card__image'} src={props.image} width={'260'} height={'200'} alt={'Place image'}/>
         </a>
       </div>
       <div className={'place-card__info'}>
@@ -28,7 +33,7 @@ export default function OfferCard(props: IOfferCardProps) {
             <b className={'place-card__price-value'}>&euro;{props.price}</b>
             <span className={'place-card__price-text'}>&#47;&nbsp;night</span>
           </div>
-          <button className={'place-card__bookmark-button place-card__bookmark-button--active button'} type={'button'}>
+          <button className={`place-card__bookmark-button ${props.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type={'button'}>
             <svg className={'place-card__bookmark-icon'} width={'18'} height={'19'}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -37,12 +42,13 @@ export default function OfferCard(props: IOfferCardProps) {
         </div>
         <div className={'place-card__rating rating'}>
           <div className={'place-card__stars rating__stars'}>
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${(MAX_PERCENT_STARS_WIDTH * props.rating) / STARS_COUNT}%`}}></span>
             <span className={'visually-hidden'}>Rating</span>
           </div>
         </div>
         <h2 className={'place-card__name'}>
-          <a href={'#'}>{props.name}</a>
+          {/* TODO Link to='' */}
+          <a href={`${AppRoute.Room.replace(':id', `${props.id}`)}`}>{props.name}</a>
         </h2>
         <p className={'place-card__type'}>{props.type}</p>
       </div>
