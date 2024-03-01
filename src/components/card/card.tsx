@@ -1,8 +1,9 @@
 import React from 'react';
 import {OfferCardType} from '../../types/types';
 import {AppRoute, STARS_COUNT, MAX_PERCENT_STARS_WIDTH} from '../../const';
+import {Link} from 'react-router-dom';
 
-export default function OfferCard({
+export default function Card({
   id,
   image,
   price,
@@ -60,8 +61,7 @@ export default function OfferCard({
           </div>
         </div>
         <h2 className={'place-card__name'}>
-          {/* TODO Link to='' */}
-          <a href={`${AppRoute.Room.replace(':id', `${id}`)}`}>{name}</a>
+          <Link to={`${AppRoute.Room.replace(':id', `${id}`)}`}>{name}</Link>
         </h2>
         <p className={'place-card__type'}>{type}</p>
       </div>

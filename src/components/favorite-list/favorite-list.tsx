@@ -1,6 +1,6 @@
 import React from 'react';
 import {OfferCardType} from '../../types/types';
-import OfferCard from '../offer-card/offer-card';
+import OfferCard from '../card/card';
 
 interface IOfferFavoriteListProps {
   offers: OfferCardType[];

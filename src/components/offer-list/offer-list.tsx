@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {OfferType} from '../../types/types';
-import OfferCard from '../offer-card/offer-card';
+import OfferCard from '../card/card';
 
 interface IOfferListProps {
   offers: OfferType[];
