@@ -1,5 +1,5 @@
-import {Offer} from '../types/types';
-export const Offers: Offer[] = [
+import {OfferType} from '../types/types';
+export const Offers: OfferType[] = [
   {
     id: 1,
     image: 'img/apartment-01.jpg',

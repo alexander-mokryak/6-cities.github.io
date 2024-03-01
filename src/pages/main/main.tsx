@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
-import {Offer} from '../../types/types';
+import {OfferType} from '../../types/types';
 
 interface IMainProps {
-  offers: Array<Offer>;
+  offers: Array<OfferType>;
 }
 
 export default function Main (props: IMainProps) {

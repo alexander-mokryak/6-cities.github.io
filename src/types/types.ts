@@ -1,4 +1,4 @@
-export type Offer = {
+export type OfferType = {
   id: number;
   image: string;
   price: number;
@@ -12,11 +12,8 @@ export type Offer = {
   };
 }
 
-export type OfferCardType = Offer & {
-  onMouseMove: (id: number) => void;
-  onMouseLeave: () => void;
-};
-
-export type OfferListType = {
-  offers: Offer[];
+export type OfferCardType = OfferType & {
+  onMouseMove?: (id: number) => void;
+  onMouseLeave?: () => void;
+  place?: 'cities' | 'favorites';
 };

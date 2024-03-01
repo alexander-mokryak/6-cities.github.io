@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
-import {OfferListType} from '../../types/types';
+import {OfferType} from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 
-export default function OfferList ({offers}: OfferListType):JSX.Element {
+interface IOfferListProps {
+  offers: OfferType[];
+}
+
+export default function OfferList ({offers}: IOfferListProps):JSX.Element {
   const [activeOffer, setActiveOffer] = useState<number | null>(null);
   window.console.log(activeOffer);
 
