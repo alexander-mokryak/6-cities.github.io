@@ -1,5 +1,5 @@
 import {OfferType} from '../types/types';
-export const Offers: OfferType[] = [
+const Offers: OfferType[] = [
   {
     id: 1,
     image: 'img/apartment-01.jpg',
@@ -9,6 +9,11 @@ export const Offers: OfferType[] = [
     type: 'apartment',
     isPremium: true,
     isFavorite: false,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
+    },
     city: {
       name: 'Amsterdam'
     }
@@ -22,6 +27,11 @@ export const Offers: OfferType[] = [
     type: 'room',
     isPremium: false,
     isFavorite: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
+    },
     city: {
       name: 'Paris'
     }
@@ -35,6 +45,11 @@ export const Offers: OfferType[] = [
     type: 'apartment',
     isPremium: false,
     isFavorite: false,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
+    },
     city: {
       name: 'Paris'
     }
@@ -48,6 +63,11 @@ export const Offers: OfferType[] = [
     type: 'apartment',
     isPremium: true,
     isFavorite: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
+    },
     city: {
       name: 'Amsterdam'
     }
@@ -61,8 +81,15 @@ export const Offers: OfferType[] = [
     type: 'room',
     isPremium: false,
     isFavorite: false,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
+    },
     city: {
       name: 'Paris'
     }
   },
 ];
+
+export default Offers;

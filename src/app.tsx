@@ -9,15 +9,20 @@ import NotFound from './pages/not-found/not-found';
 import {AppRoute, AuthorizationStatus} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
-import {Offers} from './mocks/offers';
+import {City, OfferType} from './types/types';
 
-function App(): JSX.Element {
+type AppProps = {
+  city: City;
+  offers: OfferType[];
+};
+
+function App({city, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main offers={Offers}/>}
+          element={<Main city={city} offers={offers}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -27,10 +32,9 @@ function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites offers={Offers}/>
+              <Favorites offers={offers}/>
             </PrivateRoute>
           }
-
         />
         <Route
           path={AppRoute.Room}

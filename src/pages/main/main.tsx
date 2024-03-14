@@ -1,13 +1,15 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import OfferList from '../../components/offer-list/offer-list';
-import {OfferType} from '../../types/types';
+import {City, OfferType} from '../../types/types';
+import Map from '../../components/map/map';
 
 interface IMainProps {
-  offers: Array<OfferType>;
+  city: City;
+  offers: OfferType[];
 }
 
-export default function Main (props: IMainProps) {
+export default function Main ({city, offers}: IMainProps): JSX.Element {
   return(
     <>
       <div style={{display: 'none'}}>
@@ -85,11 +87,11 @@ export default function Main (props: IMainProps) {
                   </ul>
                 </form>
                 <div className={'cities__places-list places__list tabs__content'}>
-                  <OfferList offers={props.offers}/>
+                  <OfferList offers={offers}/>
                 </div>
               </section>
               <div className={'cities__right-section'}>
-                <section className={'cities__map map'}></section>
+                <Map city={city} locations={offers.map((offer) => offer.location)}/>
               </div>
             </div>
             {/* no data */}
