@@ -1,14 +1,15 @@
 import React from 'react';
 import Header from '../../components/header/header';
-import {OfferType} from '../../types/types';
+import {Comment, OfferType} from '../../types/types';
 import FavoriteList from '../../components/favorite-list/favorite-list';
 import {Link} from 'react-router-dom';
 
 interface IFavoritesProps {
-  offers: Array<OfferType>;
+  offers: OfferType[];
+  reviews: Comment[];
 }
 
-export default function Favorites (props: IFavoritesProps) {
+export default function Favorites ({offers, reviews}: IFavoritesProps) {
   return(
     <>
       <div style={{display: 'none'}}>
@@ -29,10 +30,10 @@ export default function Favorites (props: IFavoritesProps) {
         <Header/>
         <main className={'page__main page__main--favorites'}>
           <div className={'page__favorites-container container'}>
-            {props.offers.length > 0 ? (
+            {offers.length > 0 ? (
               <section className={'favorites'}>
                 <h1 className={'favorites__title'}>Saved listing</h1>
-                <FavoriteList offers={props.offers}/>
+                <FavoriteList offers={offers}/>
               </section>
             ) : (
               <section className={'favorites favorites--empty'}>

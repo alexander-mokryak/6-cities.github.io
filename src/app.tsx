@@ -9,14 +9,15 @@ import NotFound from './pages/not-found/not-found';
 import {AppRoute, AuthorizationStatus} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
-import {City, OfferType} from './types/types';
+import {City, OfferType, Comment} from './types/types';
 
 type AppProps = {
   city: City;
   offers: OfferType[];
+  reviews: Comment[];
 };
 
-function App({city, offers}: AppProps): JSX.Element {
+function App({city, offers, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -32,7 +33,7 @@ function App({city, offers}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites offers={offers}/>
+              <Favorites offers={offers} reviews={reviews}/>
             </PrivateRoute>
           }
         />
