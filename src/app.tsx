@@ -39,7 +39,7 @@ function App({city, offers, reviews}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Room/>}
+          element={<Room city={city} nearbyOffers={offers} reviews={reviews}/>}
         />
         <Route
           path={AppRoute.NotFound}

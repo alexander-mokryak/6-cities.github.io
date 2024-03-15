@@ -91,7 +91,7 @@ export default function Main ({city, offers}: IMainProps): JSX.Element {
                 </div>
               </section>
               <div className={'cities__right-section'}>
-                <Map city={city} locations={offers.map((offer) => offer.location)}/>
+                <Map city={city} locations={offers.map((offer) => offer.location)} places={'cities'}/>
               </div>
             </div>
             {/* no data */}

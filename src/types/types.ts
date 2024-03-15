@@ -31,7 +31,7 @@ export type OfferType = {
 export type OfferCardType = OfferType & {
   onMouseMove?: (id: number) => void;
   onMouseLeave?: () => void;
-  place?: 'cities' | 'favorites';
+  place?: 'cities' | 'favorites' | 'near-places';
 };
 
 export type User = {

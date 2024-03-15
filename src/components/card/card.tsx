@@ -27,7 +27,12 @@ export default function Card({
 
   return(
     <article
-      className={`${place === 'favorites' ? 'favorites__card' : 'cities__place-card'} place-card`}
+      className={`
+        ${place === 'favorites' ? 'favorites__card' : ''}
+        ${place === 'cities' ? 'cities__place-card' : ''}
+        ${place === 'near-places' ? 'near-places__card' : ''}
+        place-card
+      `}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
