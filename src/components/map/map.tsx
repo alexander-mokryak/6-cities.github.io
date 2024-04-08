@@ -17,11 +17,13 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-const Map = ({ city, locations, places }: MapProps): JSX.Element => {
+const Map = ({ city, locations, places = 'cities' }: MapProps): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const markers: Marker[] = [];
+
     if (map) {
       locations.forEach(({ latitude: lat, longitude: lng }) => {
         const marker = new Marker({
@@ -32,9 +34,23 @@ const Map = ({ city, locations, places }: MapProps): JSX.Element => {
         marker
           .setIcon(defaultCustomIcon)
           .addTo(map);
+
+        markers.push(marker);
       });
+
+      map.fitBounds([[city.location.latitude, city.location.longitude]], {
+        maxZoom: city.location.zoom
+      });
+
+      return () => {
+        if (map) {
+          markers.forEach((marker) => {
+            map.removeLayer(marker);
+          });
+        }
+      };
     }
-  }, [map, locations]);
+  }, [map, city, locations]);
 
   return <section className={`${places}__map map`} ref={mapRef} />;
 };
