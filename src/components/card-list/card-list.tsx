@@ -1,37 +1,57 @@
-import React from 'react';
-import OfferList from '../offer-list/offer-list';
+import React, {useState} from 'react';
+import SortingList from '../sorting-list/sorting-list';
 import Map from '../map/map';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {SortName} from '../../types/types';
+import {setSorting} from '../../store/action';
+import {Comprator} from '../../const';
+import OfferCard from '../card/card';
 
 export default function CardList (): JSX.Element {
+  const dispatch = useAppDispatch();
+  const activeSorting = useAppSelector((state) => state.sorting);
   const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector((state) => state.offers
+    .filter((offer) => offer.city.name === state.city.name)
+    .sort(Comprator[state.sorting])
+  );
+  const [activeOffer, setActiveOffer] = useState<number | null>(null);
+
+  const onSortingChange = (name: SortName) => {
+    dispatch(setSorting(name));
+  };
+
+  const handleMouseMove = (id: number) => {
+    setActiveOffer(id);
+    window.console.log('mouse-move', id);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveOffer(null);
+    window.console.log('mouse-leave', 'null');
+  };
+
   return(
     <>
       <section className={'cities__places places'}>
         <h2 className={'visually-hidden'}>Places</h2>
         <b className={'places__found'}>{offers.length} places to stay in {activeCity.name}</b>
-        <form className={'places__sorting'} action={'#'} method={'get'}>
-          <span className={'places__sorting-caption'}>Sort by</span>
-          <span className={'places__sorting-type'} tabIndex={0}>
-            Popular
-            <svg className={'places__sorting-arrow'} width={'7'} height={'4'}>
-              <use xlinkHref={'#icon-arrow-select'}></use>
-            </svg>
-          </span>
-          <ul className={'places__options places__options--custom places__options--opened'}>
-            <li className={'places__option places__option--active'} tabIndex={0}>Popular</li>
-            <li className={'places__option'} tabIndex={0}>Price: low to high</li>
-            <li className={'places__option'} tabIndex={0}>Price: high to low</li>
-            <li className={'places__option'} tabIndex={0}>Top rated first</li>
-          </ul>
-        </form>
+
+        <SortingList onChange={onSortingChange} activeSorting={activeSorting}/>
+
         <div className={'cities__places-list places__list tabs__content'}>
-          <OfferList offers={offers}/>
+          {offers.map((offer) => (
+            <OfferCard
+              key={offer.id}
+              {...offer}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            />
+          ))}
         </div>
       </section>
       <div className={'cities__right-section'}>
-        <Map city={activeCity} locations={offers.map((offer) => offer.location)} places={'cities'}/>
+        <Map locations={offers.map(({ id, location }) => ({ id, ...location }))} city={activeCity} activeOffer={activeOffer} />
       </div>
     </>
   );

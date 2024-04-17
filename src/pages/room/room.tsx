@@ -155,7 +155,7 @@ export default function Room ({city, nearbyOffers, reviews}: PropertyProps) {
                 <ReviewList reviews={reviews}/>
               </div>
             </div>
-            <Map city={city} locations={nearbyOffers.map((offer) => offer.location)} places={'property'}/>
+            <Map city={city} locations={nearbyOffers.map((offer) => offer.location)} place={'property'} />
           </section>
           <div className={'container'}>
             <section className={'near-places places'}>

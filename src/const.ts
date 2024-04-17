@@ -1,4 +1,4 @@
-import {CityName, Location} from './types/types';
+import {CityName, Location, SortName, OfferType} from './types/types';
 
 export enum AppRoute {
   Main = '/',
@@ -59,3 +59,19 @@ export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
 export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const;
+
+export enum Sorting {
+  Popular = 'Popular',
+  PriceIncrease = 'Price: low to high',
+  PriceDecrease = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
+export const Comprator: {
+  [key in SortName]: (a: OfferType, b: OfferType) => number
+} = {
+  Popular: () => 0,
+  PriceIncrease: (a, b) => a.price - b.price,
+  PriceDecrease: (a, b) => b.price - a.price,
+  TopRated: (a, b) => b.rating - a.rating,
+};
