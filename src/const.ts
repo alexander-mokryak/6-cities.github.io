@@ -75,3 +75,7 @@ export const Comprator: {
   PriceDecrease: (a, b) => b.price - a.price,
   TopRated: (a, b) => b.rating - a.rating,
 };
+
+export enum ApiRoute {
+  Offers = '/hotels'
+}

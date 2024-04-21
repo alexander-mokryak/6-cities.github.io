@@ -8,18 +8,10 @@ import Favorites from './pages/favorites/Favorites';
 import Room from './pages/room/room';
 import NotFound from './pages/not-found/not-found';
 
-import {AppRoute, AuthorizationStatus} from './const';
+import {AppRoute, AuthorizationStatus, CityLocation} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
-import {City, OfferType, Comment} from './types/types';
-
-type AppProps = {
-  city: City;
-  offers: OfferType[];
-  reviews: Comment[];
-};
-
-function App({city, offers, reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -37,13 +29,13 @@ function App({city, offers, reviews}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Favorites offers={offers} reviews={reviews}/>
+                <Favorites offers={[]} reviews={[]}/>
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Room}
-            element={<Room city={city} nearbyOffers={offers} reviews={reviews}/>}
+            element={<Room city={{name: 'Amsterdam', location: CityLocation.Amsterdam}} nearbyOffers={[]} reviews={[]}/>}
           />
           <Route
             path={AppRoute.NotFound}

@@ -1,11 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {City, OfferType, SortName} from '../types/types';
-import {setCity, setOffers, setSorting} from './action';
+import {fetchOffers, setCity, setSorting} from './action';
 import {cities, CityLocation} from '../const';
 
 type State = {
   city: City;
   offers: OfferType[];
+  isOffersLoading: boolean;
   sorting: SortName;
 }
 
@@ -15,6 +16,7 @@ const initialState: State = {
     location: CityLocation[cities[0]]
   },
   offers: [],
+  isOffersLoading: false,
   sorting: 'Popular',
 };
 
@@ -26,8 +28,13 @@ export const reducer = createReducer(initialState, (builder) => {
         location: CityLocation[action.payload]
       };
     })
-    .addCase(setOffers, (state, action) => {
+    .addCase(fetchOffers.pending, (state, action) => {
+      state.isOffersLoading = true;
+    })
+    //свойство fulfilled - оно схоже с состоянием Promise и говорит, что запрос был выполнен успешно
+    .addCase(fetchOffers.fulfilled, (state, action) => {
       state.offers = action.payload;
+      state.isOffersLoading = false;
     })
     .addCase(setSorting, (state, action) => {
       state.sorting = action.payload;

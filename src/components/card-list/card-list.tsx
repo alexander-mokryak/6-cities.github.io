@@ -6,20 +6,18 @@ import {SortName} from '../../types/types';
 import {setSorting} from '../../store/action';
 import {Comprator} from '../../const';
 import OfferCard from '../card/card';
+import Spinner from '../spinner/spinner';
 
-export default function CardList (): JSX.Element {
+const CardList = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const activeSorting = useAppSelector((state) => state.sorting);
   const activeCity = useAppSelector((state) => state.city);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
   const offers = useAppSelector((state) => state.offers
     .filter((offer) => offer.city.name === state.city.name)
     .sort(Comprator[state.sorting])
   );
   const [activeOffer, setActiveOffer] = useState<number | null>(null);
-
-  const onSortingChange = (name: SortName) => {
-    dispatch(setSorting(name));
-  };
 
   const handleMouseMove = (id: number) => {
     setActiveOffer(id);
@@ -30,6 +28,14 @@ export default function CardList (): JSX.Element {
     setActiveOffer(null);
     window.console.log('mouse-leave', 'null');
   };
+
+  const onSortingChange = (name: SortName) => {
+    dispatch(setSorting(name));
+  };
+
+  if (isOffersLoading) {
+    return <Spinner/>;
+  }
 
   return(
     <>
@@ -55,4 +61,6 @@ export default function CardList (): JSX.Element {
       </div>
     </>
   );
-}
+};
+
+export default CardList;

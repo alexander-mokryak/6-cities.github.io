@@ -16,7 +16,7 @@ export type City = {
 
 export type OfferType = {
   id: number;
-  image: string;
+  previewImage: string;
   price: number;
   rating: number;
   name: string;

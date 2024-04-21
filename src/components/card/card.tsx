@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 export default function Card({
   id,
-  image,
+  previewImage,
   price,
   rating,
   name,
@@ -43,7 +43,7 @@ export default function Card({
       )}
       <div className={`${place}__image-wrapper place-card__image-wrapper`}>
         <a href={'#'}>
-          <img className={'place-card__image'} src={image} width={'260'} height={'200'} alt={'Place image'}/>
+          <img className={'place-card__image'} src={previewImage} width={'260'} height={'200'} alt={'Place image'}/>
         </a>
       </div>
       <div className={`${ place === 'favorites' ? 'favorites__card-info' : ''} place-card__info`}>
