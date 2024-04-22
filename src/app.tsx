@@ -1,4 +1,5 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes, unstable_HistoryRouter as HistoryRouter} from 'react-router-dom';
+import history from './history';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
 
@@ -8,16 +9,15 @@ import Favorites from './pages/favorites/Favorites';
 import Room from './pages/room/room';
 import NotFound from './pages/not-found/not-found';
 
-import {AppRoute, AuthorizationStatus, CityLocation} from './const';
+import {AppRoute, CityLocation} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HistoryRouter history={history}>
         <Routes>
           <Route
-            // path={AppRoute.Main}
             index
             element={<Main />}
           />
@@ -28,7 +28,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute>
                 <Favorites offers={[]} reviews={[]}/>
               </PrivateRoute>
             }
@@ -42,7 +42,7 @@ function App(): JSX.Element {
             element={<NotFound/>}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </Provider>
   );
 }

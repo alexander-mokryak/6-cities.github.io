@@ -1,13 +1,15 @@
-import { createReducer } from '@reduxjs/toolkit';
-import {City, OfferType, SortName} from '../types/types';
-import {fetchOffers, setCity, setSorting} from './action';
-import {cities, CityLocation} from '../const';
+import {createReducer} from '@reduxjs/toolkit';
+import {City, OfferType, SortName, User} from '../types/types';
+import {fetchOffers, fetchUserStatus, loginUser, setCity, setSorting} from './action';
+import {AuthorizationStatus, cities, CityLocation} from '../const';
 
 type State = {
   city: City;
   offers: OfferType[];
   isOffersLoading: boolean;
   sorting: SortName;
+  authorizationStatus: AuthorizationStatus;
+  user: User['email'];
 }
 
 const initialState: State = {
@@ -18,6 +20,8 @@ const initialState: State = {
   offers: [],
   isOffersLoading: false,
   sorting: 'Popular',
+  authorizationStatus: AuthorizationStatus.NoAuth,
+  user: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -32,11 +36,23 @@ export const reducer = createReducer(initialState, (builder) => {
       state.isOffersLoading = true;
     })
     //свойство fulfilled - оно схоже с состоянием Promise и говорит, что запрос был выполнен успешно
+    // rejected - отклонен
     .addCase(fetchOffers.fulfilled, (state, action) => {
       state.offers = action.payload;
       state.isOffersLoading = false;
     })
     .addCase(setSorting, (state, action) => {
       state.sorting = action.payload;
+    })
+    .addCase(fetchUserStatus.fulfilled, (state, action) => {
+      state.user = action.payload.email;
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(fetchUserStatus.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(loginUser.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.authorizationStatus = AuthorizationStatus.Auth;
     });
 });
