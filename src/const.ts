@@ -5,7 +5,11 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offer/:id',
-  NotFound = '*'
+  NotFound = '/404'
+}
+
+export enum HttpCode {
+  NotFound = 404
 }
 
 export enum AuthorizationStatus {
@@ -79,4 +83,5 @@ export const Comprator: {
 export enum ApiRoute {
   Offers = '/hotels',
   Login = '/login',
+  Comments = '/comments'
 }

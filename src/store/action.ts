@@ -1,8 +1,8 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {CityName, OfferType, SortName, User, UserAuth} from '../types/types';
+import {CityName, Comment, OfferType, SortName, User, UserAuth} from '../types/types';
 import type { History } from 'history';
-import {AxiosInstance} from 'axios';
-import {ApiRoute, AppRoute} from '../const';
+import {AxiosError, AxiosInstance} from 'axios';
+import {ApiRoute, AppRoute, HttpCode} from '../const';
 import {Token} from '../utils';
 
 type Extra = {
@@ -13,6 +13,9 @@ type Extra = {
 export const Action = {
   SET_CITY: 'city/set',
   FETCH_OFFERS: 'offers/fetch',
+  FETCH_OFFER: 'offer/fetch',
+  FETCH_NEARBY_OFFERS: 'offers/fetch-nearby',
+  FETCH_COMMENTS: 'offer/fetch-comments',
   SET_SORTING: 'sorting/set',
   LOGIN_USER: 'user/login',
   FETCH_USER_STATUS: 'user/fetch-status'
@@ -27,6 +30,43 @@ export const fetchOffers = createAsyncThunk<OfferType[], undefined, { extra: Ext
   async (_, { extra: extra }) => {
     const {api} = extra;
     const { data } = await api.get<OfferType[]>(ApiRoute.Offers);
+
+    return data;
+  });
+
+export const fetchOffer = createAsyncThunk<OfferType, OfferType['id'], {extra: Extra}>(
+  Action.FETCH_OFFER,
+  async (id, {extra}) => {
+    const {api, history} = extra;
+    try {
+      const {data} = await api.get<OfferType>(`${ApiRoute.Offers}/${id}`);
+
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === HttpCode.NotFound) {
+        history.push(AppRoute.NotFound);
+      }
+      // это позволит попасть в нужную ветку в reducer — fetchOffer.rejected
+      // Подробнее про то, что может возвращать action можно прочитать в документации к createAsyncThunk
+      return Promise.reject(error);
+    }
+  });
+
+export const fetchNearbyOffers = createAsyncThunk<OfferType[], OfferType['id'], { extra: Extra }>(
+  Action.FETCH_NEARBY_OFFERS,
+  async (id, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<OfferType[]>(`${ApiRoute.Offers}/${id}/nearby`);
+
+    return data;
+  });
+
+export const fetchComments = createAsyncThunk<Comment[], OfferType['id'], { extra: Extra }>(
+  Action.FETCH_COMMENTS,
+  async (id, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<Comment[]>(`${ApiRoute.Comments}/${id}`);
 
     return data;
   });

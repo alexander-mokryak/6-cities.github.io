@@ -9,7 +9,7 @@ import Favorites from './pages/favorites/Favorites';
 import Room from './pages/room/room';
 import NotFound from './pages/not-found/not-found';
 
-import {AppRoute, CityLocation} from './const';
+import {AppRoute} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
 function App(): JSX.Element {
@@ -35,7 +35,7 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<Room city={{name: 'Amsterdam', location: CityLocation.Amsterdam}} nearbyOffers={[]} reviews={[]}/>}
+            element={<Room/>}
           />
           <Route
             path={AppRoute.NotFound}

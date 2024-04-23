@@ -8,7 +8,7 @@ export default function Card({
   previewImage,
   price,
   rating,
-  name,
+  title,
   type,
   isPremium,
   isFavorite,
@@ -66,7 +66,7 @@ export default function Card({
           </div>
         </div>
         <h2 className={'place-card__name'}>
-          <Link to={`${AppRoute.Room.replace(':id', `${id}`)}`}>{name}</Link>
+          <Link to={`${AppRoute.Room.replace(':id', `${id}`)}`}>{title}</Link>
         </h2>
         <p className={'place-card__type'}>{type}</p>
       </div>

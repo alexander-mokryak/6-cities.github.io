@@ -19,14 +19,18 @@ export type OfferType = {
   previewImage: string;
   price: number;
   rating: number;
-  name: string;
+  title: string;
   type: 'apartment' | 'room' | 'house' | 'hotel';
   isPremium?: boolean;
   isFavorite: boolean;
   location: Location;
-  city: {
-    name: CityName;
-  };
+  city: City;
+  bedrooms: number;
+  description: string;
+  goods: [string];
+  host: User;
+  images: [string];
+  maxAdults: number;
 }
 
 export type OfferCardType = OfferType & {
