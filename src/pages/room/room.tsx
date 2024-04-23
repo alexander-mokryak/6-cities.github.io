@@ -6,8 +6,9 @@ import Map from '../../components/map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
 import {useParams} from 'react-router-dom';
-import {fetchComments, fetchNearbyOffers, fetchOffer} from '../../store/action';
+import {fetchComments, fetchNearbyOffers, fetchOffer, postComment} from '../../store/action';
 import {getStarsWidth} from '../../utils';
+import {CommentAuth} from '../../types/types';
 
 const Room = (): JSX.Element | null => {
   const params = useParams();
@@ -43,6 +44,10 @@ const Room = (): JSX.Element | null => {
 
   const locations = nearbyOffers.map(({ id: nearbyId, location: nearbyLocation, }) => ({ id: nearbyId, ...nearbyLocation }));
   locations.push({ id, ...location });
+
+  const onFormSubmit = (formData: Omit<CommentAuth, 'id'>) => {
+    dispatch(postComment({ id, ...formData }));
+  };
 
   return(
     <div className={'page'}>
@@ -132,7 +137,11 @@ const Room = (): JSX.Element | null => {
                   </p>
                 </div>
               </div>
-              <ReviewList reviews={comments} authorizationStatus={authorizationStatus}/>
+              <ReviewList
+                reviews={comments}
+                authorizationStatus={authorizationStatus}
+                onSubmit={onFormSubmit}
+              />
             </div>
           </div>
           <Map city={city} locations={locations} activeOffer={id} place={'property'} />

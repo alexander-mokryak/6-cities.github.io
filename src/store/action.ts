@@ -1,5 +1,5 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {CityName, Comment, OfferType, SortName, User, UserAuth} from '../types/types';
+import {CityName, Comment, CommentAuth, OfferType, SortName, User, UserAuth} from '../types/types';
 import type { History } from 'history';
 import {AxiosError, AxiosInstance} from 'axios';
 import {ApiRoute, AppRoute, HttpCode} from '../const';
@@ -16,6 +16,7 @@ export const Action = {
   FETCH_OFFER: 'offer/fetch',
   FETCH_NEARBY_OFFERS: 'offers/fetch-nearby',
   FETCH_COMMENTS: 'offer/fetch-comments',
+  POST_COMMENT: 'offer/post-comment',
   SET_SORTING: 'sorting/set',
   LOGIN_USER: 'user/login',
   FETCH_USER_STATUS: 'user/fetch-status'
@@ -91,6 +92,14 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     // history.back();
     history.push(AppRoute.Main);
 
-
     return email;
+  });
+
+export const postComment = createAsyncThunk<Comment[], CommentAuth, { extra: Extra }>(
+  Action.POST_COMMENT,
+  async ({ id, comment, rating }, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.post<Comment[]>(`${ApiRoute.Comments}/${id}`, { comment, rating });
+
+    return data;
   });

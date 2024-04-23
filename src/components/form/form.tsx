@@ -1,11 +1,15 @@
 import React, {useState, Fragment} from 'react';
 import type {ChangeEvent, FormEvent} from 'react';
 import {STARS_COUNT} from '../../const';
+import {CommentAuth} from '../../types/types';
 
-const Form = () => {
+type FormProps = {
+  onSubmit: (formData: Omit<CommentAuth, 'id'>) => void;
+}
+
+const Form = ({onSubmit}: FormProps) => {
   const [text, setText] = useState<string>('');
-  window.console.log(text);
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating] = useState<number>(0);
 
   const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -17,12 +21,13 @@ const Form = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      rating: formData.get('rating'),
-      review: formData.get('review'),
-    };
-    window.console.log(data);
+
+    onSubmit({
+      comment: text,
+      rating
+    });
+    setText('');
+    setRating(0);
   };
 
   return (

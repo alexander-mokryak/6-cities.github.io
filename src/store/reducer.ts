@@ -6,7 +6,7 @@ import {
   fetchOffer,
   fetchOffers,
   fetchUserStatus,
-  loginUser,
+  loginUser, postComment,
   setCity,
   setSorting
 } from './action';
@@ -90,5 +90,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+
+    .addCase(postComment.fulfilled, (state, action) => {
+      state.comments = action.payload;
     });
 });

@@ -57,3 +57,5 @@ export type Comment = {
   rating: number;
   user: User;
 }
+
+export type CommentAuth = Pick<Comment, 'comment' | 'rating'> & Pick<OfferType, 'id'>;
