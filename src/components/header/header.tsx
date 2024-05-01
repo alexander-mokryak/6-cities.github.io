@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 
-export default function Header () {
+const Header = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
 
@@ -39,4 +39,6 @@ export default function Header () {
       </div>
     </header>
   );
-}
+};
+
+export default memo(Header);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {CityName} from '../../types/types';
 
 interface CityProps {
@@ -7,7 +7,7 @@ interface CityProps {
   onClick: (name: CityName) => void;
 }
 
-export default function City ({name, isActive, onClick}: CityProps) {
+const City = ({name, isActive, onClick}: CityProps) => {
   const handleCityClick = () => {
     onClick(name);
   };
@@ -19,4 +19,6 @@ export default function City ({name, isActive, onClick}: CityProps) {
       </a>
     </li>
   );
-}
+};
+
+export default memo(City);

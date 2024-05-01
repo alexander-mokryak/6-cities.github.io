@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import City from '../city/city';
 import {cities} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -10,9 +10,9 @@ export default function CitiesList ():JSX.Element {
   const dispatch = useAppDispatch();
   const activeCity = useAppSelector(getCity);
 
-  const handleCityClick = (name: CityName) => {
+  const handleCityClick = useCallback((name: CityName) => {
     dispatch(setCity(name));
-  };
+  }, [dispatch]);
 
   return(
     <ul className={'locations__list tabs__list'}>
