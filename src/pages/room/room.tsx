@@ -9,15 +9,17 @@ import {useParams} from 'react-router-dom';
 import {fetchComments, fetchNearbyOffers, fetchOffer, postComment} from '../../store/action';
 import {getStarsWidth} from '../../utils';
 import {CommentAuth} from '../../types/types';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getComments, getIsOfferLoading, getNearbyOffers, getOffer} from '../../store/site-data/selectors';
 
 const Room = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOfferLoading = useAppSelector((state) => state.isOffersLoading);
-  const offer = useAppSelector((state) => state.offer);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const comments = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const offer = useAppSelector(getOffer);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const comments = useAppSelector(getComments);
 
   useEffect(() => {
     const {id} = params;

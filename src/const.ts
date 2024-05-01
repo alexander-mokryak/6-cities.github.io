@@ -71,7 +71,7 @@ export enum Sorting {
   TopRated = 'Top rated first',
 }
 
-export const Comprator: {
+export const Comparator: {
   [key in SortName]: (a: OfferType, b: OfferType) => number
 } = {
   Popular: () => 0,
@@ -84,4 +84,10 @@ export enum ApiRoute {
   Offers = '/hotels',
   Login = '/login',
   Comments = '/comments'
+}
+
+export enum StoreSlice {
+  SiteData = 'SITE_DATA',
+  SiteProcess = 'SITE_PROCESS',
+  UserProcess = 'USER_PROCESS',
 }

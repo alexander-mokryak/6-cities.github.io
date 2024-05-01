@@ -2,12 +2,13 @@ import React from 'react';
 import City from '../city/city';
 import {cities} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {setCity} from '../../store/action';
+import {setCity} from '../../store/site-process/site-process';
 import {CityName} from '../../types/types';
+import {getCity} from '../../store/site-process/selectors';
 
 export default function CitiesList ():JSX.Element {
   const dispatch = useAppDispatch();
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector(getCity);
 
   const handleCityClick = (name: CityName) => {
     dispatch(setCity(name));
