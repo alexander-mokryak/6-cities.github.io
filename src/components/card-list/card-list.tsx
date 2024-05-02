@@ -8,6 +8,7 @@ import OfferCard from '../card/card';
 import Spinner from '../spinner/spinner';
 import {getCity, getSorting} from '../../store/site-process/selectors';
 import {getIsOffersLoading, selectOffers} from '../../store/site-data/selectors';
+import CardListEmpty from '../card-list-empty/card-list-empty';
 
 const CardList = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const CardList = (): JSX.Element => {
   const isOffersLoading = useAppSelector(getIsOffersLoading);
   const offers = useAppSelector(selectOffers);
   const [activeOffer, setActiveOffer] = useState<number | null>(null);
+  const isEmpty = offers.length === 0;
 
   const handleMouseMove = (id: number) => {
     setActiveOffer(id);
@@ -36,28 +38,34 @@ const CardList = (): JSX.Element => {
   }
 
   return(
-    <>
-      <section className={'cities__places places'}>
-        <h2 className={'visually-hidden'}>Places</h2>
-        <b className={'places__found'}>{offers.length} places to stay in {activeCity.name}</b>
+    <div className={`cities__places-container container ${isEmpty ? 'cities__places-container--empty' : ''}`}>
+      {isEmpty ? (
+        <CardListEmpty city={activeCity.name}/>
+      ) : (
+        <section className={'cities__places places'}>
+          <h2 className={'visually-hidden'}>Places</h2>
+          <b className={'places__found'}>{offers.length} places to stay in {activeCity.name}</b>
 
-        <SortingList onChange={onSortingChange} activeSorting={activeSorting}/>
+          <SortingList onChange={onSortingChange} activeSorting={activeSorting}/>
 
-        <div className={'cities__places-list places__list tabs__content'}>
-          {offers.map((offer) => (
-            <OfferCard
-              key={offer.id}
-              {...offer}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-            />
-          ))}
-        </div>
-      </section>
+          <div className={'cities__places-list places__list tabs__content'}>
+            {offers.map((offer) => (
+              <OfferCard
+                key={offer.id}
+                {...offer}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              />
+            ))}
+          </div>
+        </section>
+      )}
       <div className={'cities__right-section'}>
-        <Map locations={offers.map(({ id, location }) => ({ id, ...location }))} city={activeCity} activeOffer={activeOffer} />
+        {!isEmpty && (
+          <Map locations={offers.map(({id, location}) => ({id, ...location}))} city={activeCity} activeOffer={activeOffer}/>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
