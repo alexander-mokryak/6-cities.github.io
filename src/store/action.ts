@@ -14,6 +14,7 @@ export const Action = {
   SET_CITY: 'city/set',
   FETCH_OFFERS: 'offers/fetch',
   FETCH_OFFER: 'offer/fetch',
+  FETCH_FAVORITE_OFFERS: 'offers/fetch-favorite',
   FETCH_NEARBY_OFFERS: 'offers/fetch-nearby',
   FETCH_COMMENTS: 'offer/fetch-comments',
   POST_COMMENT: 'offer/post-comment',
@@ -52,6 +53,15 @@ export const fetchOffer = createAsyncThunk<OfferType, OfferType['id'], {extra: E
       // Подробнее про то, что может возвращать action можно прочитать в документации к createAsyncThunk
       return Promise.reject(error);
     }
+  });
+
+export const fetchFavoriteOffers = createAsyncThunk<OfferType[], undefined, { extra: Extra }>(
+  Action.FETCH_FAVORITE_OFFERS,
+  async (_, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<OfferType[]>(ApiRoute.Favorite);
+
+    return data;
   });
 
 export const fetchNearbyOffers = createAsyncThunk<OfferType[], OfferType['id'], { extra: Extra }>(

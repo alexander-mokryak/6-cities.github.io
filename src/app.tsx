@@ -19,7 +19,7 @@ function App(): JSX.Element {
         <Routes>
           <Route
             index
-            element={<Main />}
+            element={<Main/>}
           />
           <Route
             path={AppRoute.Login}
@@ -29,7 +29,7 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <Favorites offers={[]} reviews={[]}/>
+                <Favorites/>
               </PrivateRoute>
             }
           />

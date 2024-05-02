@@ -83,7 +83,8 @@ export const Comparator: {
 export enum ApiRoute {
   Offers = '/hotels',
   Login = '/login',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum StoreSlice {
