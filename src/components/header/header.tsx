@@ -3,10 +3,12 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
+import {getFavoriteOffers} from '../../store/site-data/selectors';
 
 const Header = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   return(
     <header className={'header'}>
@@ -24,7 +26,9 @@ const Header = () => {
                   <Link className={'header__nav-link header__nav-link--profile'} to={AppRoute.Favorites}>
                     <div className={'header__avatar-wrapper user__avatar-wrapper'}/>
                     <span className={'header__user-name user__name'}>{user}</span>
-                    <span className={'header__favorite-count'}>3</span>
+                    {favoriteOffers.length > 0 && (
+                      <span className={'header__favorite-count'} style={{marginLeft: '6px'}}>{favoriteOffers.length}</span>
+                    )}
                   </Link>
                 </li>
               )}

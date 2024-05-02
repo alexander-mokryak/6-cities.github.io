@@ -59,3 +59,4 @@ export type Comment = {
 }
 
 export type CommentAuth = Pick<Comment, 'comment' | 'rating'> & Pick<OfferType, 'id'>;
+export type FavoriteAuth = Pick<OfferType, 'id'> & {status: 1 | 0};

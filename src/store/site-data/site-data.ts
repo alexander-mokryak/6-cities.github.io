@@ -1,7 +1,15 @@
 import {SiteData} from '../../types/state';
 import {createSlice} from '@reduxjs/toolkit';
 import {StoreSlice} from '../../const';
-import {fetchComments, fetchFavoriteOffers, fetchNearbyOffers, fetchOffer, fetchOffers, postComment} from '../action';
+import {
+  fetchComments,
+  fetchFavoriteOffers,
+  fetchNearbyOffers,
+  fetchOffer,
+  fetchOffers,
+  postComment,
+  postFavorite
+} from '../action';
 
 const initialState: SiteData = {
   offers: [],
@@ -38,6 +46,20 @@ export const siteData = createSlice({
       .addCase(fetchFavoriteOffers.rejected, (state) => {
         state.isFavoriteOffersLoading = false;
       })
+      .addCase(postFavorite.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+        state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
+
+        if (state.offer && state.offer.id === updatedOffer.id) {
+          state.offer = updatedOffer;
+        }
+
+        if (updatedOffer.isFavorite) {
+          state.favoriteOffers = state.favoriteOffers.concat(updatedOffer);
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== updatedOffer.id);
+        }
+      })
 
       .addCase(fetchOffer.pending, (state) => {
         state.isOffersLoading = true;
@@ -47,7 +69,7 @@ export const siteData = createSlice({
         state.isOffersLoading = false;
       })
       .addCase(fetchOffer.rejected, (state) => {
-        state.isOffersLoading = false;//TODO true?
+        state.isOffersLoading = true;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;

@@ -21,12 +21,10 @@ const CardList = (): JSX.Element => {
 
   const handleMouseMove = (id: number) => {
     setActiveOffer(id);
-    window.console.log('mouse-move', id);
   };
 
   const handleMouseLeave = () => {
     setActiveOffer(null);
-    window.console.log('mouse-leave', 'null');
   };
 
   const onSortingChange = (name: SortName) => {
@@ -38,7 +36,7 @@ const CardList = (): JSX.Element => {
   }
 
   return(
-    <div className={`cities__places-container container ${isEmpty ? 'cities__places-container--empty' : ''}`}>
+    <div className={`cities__places-container container ${isEmpty ? 'cities__places-container--empty page__main--index-empty' : ''}`}>
       {isEmpty ? (
         <CardListEmpty city={activeCity.name}/>
       ) : (
