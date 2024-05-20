@@ -62,14 +62,14 @@ export const siteData = createSlice({
       })
 
       .addCase(fetchOffer.pending, (state) => {
-        state.isOffersLoading = true;
+        state.isOfferLoading = true;
       })
       .addCase(fetchOffer.fulfilled, (state, action) => {
         state.offer = action.payload;
-        state.isOffersLoading = false;
+        state.isOfferLoading = false;
       })
       .addCase(fetchOffer.rejected, (state) => {
-        state.isOffersLoading = true;
+        state.isOfferLoading = true;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
