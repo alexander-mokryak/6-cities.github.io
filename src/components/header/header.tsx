@@ -1,14 +1,22 @@
 import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 import {getFavoriteOffers} from '../../store/site-data/selectors';
+import {logoutUser} from '../../store/action';
 
 const Header = () => {
+  const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  const handleLogoutClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(logoutUser());
+    }
+  };
 
   return(
     <header className={'header'}>
@@ -33,7 +41,11 @@ const Header = () => {
                 </li>
               )}
               <li className={'header__nav-item'}>
-                <Link className={'header__nav-link'} to={AppRoute.Login}>
+                <Link
+                  className={'header__nav-link'}
+                  to={authorizationStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login}
+                  onClick={handleLogoutClick}
+                >
                   <span className={'header__signout'}>{authorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}</span>
                 </Link>
               </li>

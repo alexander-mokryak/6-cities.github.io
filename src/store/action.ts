@@ -21,6 +21,7 @@ export const Action = {
   POST_COMMENT: 'offer/post-comment',
   SET_SORTING: 'sorting/set',
   LOGIN_USER: 'user/login',
+  LOFOUT_USER: 'user/logout',
   FETCH_USER_STATUS: 'user/fetch-status'
 };
 
@@ -124,6 +125,15 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     history.push(AppRoute.Main);
 
     return email;
+  });
+
+export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
+  Action.LOFOUT_USER,
+  async (_, { extra }) => {
+    const { api } = extra;
+    await api.delete(ApiRoute.Logout);
+
+    Token.drop();
   });
 
 export const postComment = createAsyncThunk<Comment[], CommentAuth, { extra: Extra }>(

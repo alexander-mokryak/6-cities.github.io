@@ -1,6 +1,6 @@
 import {userProcess} from './user-process';
 import {AuthorizationStatus} from '../../const';
-import {fetchUserStatus, loginUser} from '../action';
+import {fetchUserStatus, loginUser, logoutUser} from '../action';
 import {makeFakeUserAuthData, makeFakeUserData} from '../../test-mocks';
 import {UserProcess} from '../../types/state';
 
@@ -48,6 +48,14 @@ describe('Reducer: userProcess', () => {
       .toEqual({
         authorizationStatus: AuthorizationStatus.Auth,
         user: mockUserAuthData.email
+      });
+  });
+
+  it('should logout user', () => {
+    expect(userProcess.reducer(state, {type: logoutUser.fulfilled.type}))
+      .toEqual({
+        authorizationStatus: AuthorizationStatus.NoAuth,
+        user: ''
       });
   });
 });

@@ -1,7 +1,9 @@
 import React from 'react';
 import {OfferType} from '../../types/types';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {postFavorite} from '../../store/action';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {AuthorizationStatus} from '../../const';
 
 type BookmarkProps = {
   id: OfferType['id'];
@@ -11,6 +13,7 @@ type BookmarkProps = {
 
 const Bookmark = ({id, isActive, place}: BookmarkProps) => {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleButtonClick = () => {
     dispatch(postFavorite({id, status: isActive ? 0 : 1} ));
@@ -18,7 +21,7 @@ const Bookmark = ({id, isActive, place}: BookmarkProps) => {
 
   return(
     <button
-      className={`${place}__bookmark-button ${isActive ? `${place}__bookmark-button--active` : ''} button`} type={'button'}
+      className={`${place}__bookmark-button ${isActive && authorizationStatus === AuthorizationStatus.Auth ? `${place}__bookmark-button--active` : ''} button`} type={'button'}
       onClick={handleButtonClick}
     >
       <svg
@@ -28,7 +31,7 @@ const Bookmark = ({id, isActive, place}: BookmarkProps) => {
       >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
-      <span className={'visually-hidden'}>${place === 'place-card' ? 'In' : 'To'} bookmarks</span>
+      <span className={'visually-hidden'}>${isActive && authorizationStatus === AuthorizationStatus.Auth ? 'From' : 'To'} bookmarks</span>
     </button>
   );
 };
