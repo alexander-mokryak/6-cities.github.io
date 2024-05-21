@@ -1,4 +1,4 @@
-import {Comparator, StoreSlice} from '../../const';
+import {Comparator, StoreSlice, SubmitStatus} from '../../const';
 import {State} from '../../types/state';
 import {Comment, OfferType} from '../../types/types';
 import {createSelector} from '@reduxjs/toolkit';
@@ -15,6 +15,7 @@ export const getOffer = ({ [StoreSlice.SiteData]: SITE_DATA }: State): OfferType
 
 export const getNearbyOffers = ({ [StoreSlice.SiteData]: SITE_DATA }: State): OfferType[] => SITE_DATA.nearbyOffers;
 export const getComments = ({ [StoreSlice.SiteData]: SITE_DATA }: State): Comment[] => SITE_DATA.comments;
+export const getCommentStatus = ({ [StoreSlice.SiteData]: SITE_DATA }: State): SubmitStatus => SITE_DATA.commentStatus;
 
 export const selectOffers = createSelector(
   [getOffers, getCity, getSorting],

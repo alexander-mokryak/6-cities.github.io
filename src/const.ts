@@ -93,3 +93,13 @@ export enum StoreSlice {
   SiteProcess = 'SITE_PROCESS',
   UserProcess = 'USER_PROCESS',
 }
+
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
+export enum SubmitStatus {
+  Still = 'STILL',
+  Pending = 'PENDING',
+  Fullfilled = 'FULLFILLED',
+  Rejected = 'REJECTED'
+}

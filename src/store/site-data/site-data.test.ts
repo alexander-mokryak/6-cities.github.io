@@ -11,6 +11,7 @@ import {
   postFavorite
 } from '../action';
 import {makeFakeComment, makeFakeOffer} from '../../test-mocks';
+import {SubmitStatus} from '../../const';
 
 const offers: OfferType[] = [makeFakeOffer()];
 const comments: Comment = makeFakeComment();
@@ -28,6 +29,7 @@ describe('Reducer: userProcess', () => {
       isFavoriteOffersLoading: false,
       nearbyOffers: [],
       comments: [],
+      commentStatus: SubmitStatus.Still,
     };
   });
 
@@ -107,10 +109,55 @@ describe('Reducer: userProcess', () => {
   });
 
   it('should post comment', () => {
-    expect(siteData.reducer(initialState, { type: postComment.fulfilled.type, payload: comments }))
+    const state = {
+      offers: [],
+      isOffersLoading: false,
+      offer: null,
+      isOfferLoading: false,
+      favoriteOffers: [],
+      isFavoriteOffersLoading: false,
+      nearbyOffers: [],
+      comments: [],
+      commentStatus: SubmitStatus.Still,
+    };
+
+    expect(siteData.reducer(state, { type: postComment.pending.type }))
       .toEqual({
-        ...initialState,
+        offers: [],
+        isOffersLoading: false,
+        offer: null,
+        isOfferLoading: false,
+        favoriteOffers: [],
+        isFavoriteOffersLoading: false,
+        nearbyOffers: [],
+        comments: [],
+        commentStatus: SubmitStatus.Pending,
+      });
+
+    expect(siteData.reducer(state, { type: postComment.fulfilled.type, payload: comments }))
+      .toEqual({
+        offers: [],
+        isOffersLoading: false,
+        offer: null,
+        isOfferLoading: false,
+        favoriteOffers: [],
+        isFavoriteOffersLoading: false,
+        nearbyOffers: [],
         comments,
+        commentStatus: SubmitStatus.Fullfilled,
+      });
+
+    expect(siteData.reducer(state, { type: postComment.rejected.type }))
+      .toEqual({
+        offers: [],
+        isOffersLoading: false,
+        offer: null,
+        isOfferLoading: false,
+        favoriteOffers: [],
+        isFavoriteOffersLoading: false,
+        nearbyOffers: [],
+        comments: [],
+        commentStatus: SubmitStatus.Rejected,
       });
   });
 

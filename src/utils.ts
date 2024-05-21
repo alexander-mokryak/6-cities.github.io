@@ -24,3 +24,6 @@ export class Token {
     localStorage.removeItem(this._name);
   }
 }
+
+export const pluralize = (str: string, count: number) => count === 1 ? str : `${str}s`;
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

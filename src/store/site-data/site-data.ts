@@ -1,6 +1,6 @@
 import {SiteData} from '../../types/state';
 import {createSlice} from '@reduxjs/toolkit';
-import {StoreSlice} from '../../const';
+import {StoreSlice, SubmitStatus} from '../../const';
 import {
   fetchComments,
   fetchFavoriteOffers,
@@ -19,7 +19,8 @@ const initialState: SiteData = {
   favoriteOffers: [],
   isFavoriteOffersLoading: false,
   nearbyOffers: [],
-  comments: []
+  comments: [],
+  commentStatus: SubmitStatus.Still,
 };
 
 export const siteData = createSlice({
@@ -78,8 +79,16 @@ export const siteData = createSlice({
       .addCase(fetchComments.fulfilled, (state, action) => {
         state.comments = action.payload;
       })
+
+      .addCase(postComment.pending,(state) => {
+        state.commentStatus = SubmitStatus.Pending;
+      })
       .addCase(postComment.fulfilled, (state, action) => {
         state.comments = action.payload;
+        state.commentStatus = SubmitStatus.Fullfilled;
+      })
+      .addCase(postComment.rejected,(state) => {
+        state.commentStatus = SubmitStatus.Rejected;
       });
   }
 });

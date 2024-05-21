@@ -2,19 +2,20 @@ import React from 'react';
 import {Comment, CommentAuth} from '../../types/types';
 import Review from '../review/review';
 import Form from '../form/form';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, SubmitStatus} from '../../const';
 
 type ReviewList = {
   reviews: Comment[];
   authorizationStatus: AuthorizationStatus;
   onSubmit: (formData: Omit<CommentAuth, 'id'>) => void;
+  submitStatus: SubmitStatus;
 }
 
-export default function ReviewList ({reviews, authorizationStatus, onSubmit}: ReviewList) {
+export default function ReviewList ({reviews, authorizationStatus, onSubmit, submitStatus}: ReviewList) {
   if (reviews.length === 0) {
     return(
       <section className={'property__reviews reviews'}>
-        {authorizationStatus === AuthorizationStatus.Auth && <Form onSubmit={onSubmit}/>}
+        {authorizationStatus === AuthorizationStatus.Auth && <Form onSubmit={onSubmit} submitStatus={submitStatus}/>}
       </section>
     );
   }
@@ -28,7 +29,7 @@ export default function ReviewList ({reviews, authorizationStatus, onSubmit}: Re
           <Review key={review.id} {...review}/>
         ))}
       </ul>
-      {authorizationStatus === AuthorizationStatus.Auth && <Form onSubmit={onSubmit}/>}
+      {authorizationStatus === AuthorizationStatus.Auth && <Form onSubmit={onSubmit} submitStatus={submitStatus}/>}
     </section>
   );
 }

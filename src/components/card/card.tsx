@@ -3,6 +3,7 @@ import {OfferCardType} from '../../types/types';
 import {AppRoute, STARS_COUNT, MAX_PERCENT_STARS_WIDTH} from '../../const';
 import {Link} from 'react-router-dom';
 import Bookmark from '../bookmark/bookmark';
+import {capitalize} from '../../utils';
 
 const Card = ({
   id,
@@ -64,7 +65,7 @@ const Card = ({
         <h2 className={'place-card__name'}>
           <Link to={`${AppRoute.Room.replace(':id', `${id}`)}`}>{title}</Link>
         </h2>
-        <p className={'place-card__type'}>{type}</p>
+        <p className={'place-card__type'}>{capitalize(type)}</p>
       </div>
     </article>
   );

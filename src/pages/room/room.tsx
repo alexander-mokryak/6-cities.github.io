@@ -7,10 +7,16 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import Spinner from '../../components/spinner/spinner';
 import {useParams} from 'react-router-dom';
 import {fetchComments, fetchNearbyOffers, fetchOffer, postComment} from '../../store/action';
-import {getStarsWidth} from '../../utils';
+import {capitalize, getStarsWidth, pluralize} from '../../utils';
 import {CommentAuth} from '../../types/types';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import {getComments, getIsOfferLoading, getNearbyOffers, getOffer} from '../../store/site-data/selectors';
+import {
+  getComments,
+  getCommentStatus,
+  getIsOfferLoading,
+  getNearbyOffers,
+  getOffer
+} from '../../store/site-data/selectors';
 import Bookmark from '../../components/bookmark/bookmark';
 
 const Room = (): JSX.Element | null => {
@@ -21,6 +27,7 @@ const Room = (): JSX.Element | null => {
   const offer = useAppSelector(getOffer);
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const comments = useAppSelector(getComments);
+  const commentStatus = useAppSelector(getCommentStatus);
 
   useEffect(() => {
     const {id} = params;
@@ -88,13 +95,13 @@ const Room = (): JSX.Element | null => {
               </div>
               <ul className={'property__features'}>
                 <li className={'property__feature property__feature--entire'}>
-                  {type}
+                  {capitalize(type)}
                 </li>
                 <li className={'property__feature property__feature--bedrooms'}>
-                  {bedrooms} Bedrooms
+                  {bedrooms} {pluralize('Bedroom', bedrooms)}
                 </li>
                 <li className={'property__feature property__feature--adults'}>
-                  Max {maxAdults} adults
+                  Max {maxAdults} {pluralize('adult', maxAdults)}
                 </li>
               </ul>
               <div className={'property__price'}>
@@ -139,6 +146,7 @@ const Room = (): JSX.Element | null => {
                 reviews={comments}
                 authorizationStatus={authorizationStatus}
                 onSubmit={onFormSubmit}
+                submitStatus={commentStatus}
               />
             </div>
           </div>
