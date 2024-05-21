@@ -1,9 +1,13 @@
 import React from 'react';
 import Header from '../../components/header/header';
 import type {FormEvent} from 'react';
-import {UserAuth} from '../../types/types';
+import {CityName, UserAuth} from '../../types/types';
 import {useAppDispatch} from '../../hooks';
 import {loginUser} from '../../store/action';
+import {AppRoute, cities, getRandomElement, INVALID_PASSWORD_MESSAGE, VALID_PASSWORD_REGEXP} from '../../const';
+import {Link} from 'react-router-dom';
+import {setCity} from '../../store/site-process/site-process';
+import {toast} from 'react-toastify';
 
 export default function Login () {
   const dispatch = useAppDispatch();
@@ -15,7 +19,17 @@ export default function Login () {
     const formData = new FormData(form) as Iterable<[UserAuth]>;
     const data = Object.fromEntries(formData);
 
+    if (!data.password.match(VALID_PASSWORD_REGEXP)) {
+      toast.warn(INVALID_PASSWORD_MESSAGE);
+      return;
+    }
+
     dispatch(loginUser(data));
+  };
+
+  const handleLinkClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const cityName = evt.currentTarget.textContent as CityName;
+    dispatch(setCity(cityName));
   };
 
   return(
@@ -39,9 +53,9 @@ export default function Login () {
           </section>
           <section className={'locations locations--login locations--current'}>
             <div className={'locations__item'}>
-              <a className={'locations__item-link'} href={'#'}>
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" onClick={handleLinkClick} to={AppRoute.Main}>
+                <span>{getRandomElement<CityName>(cities)}</span>
+              </Link>
             </div>
           </section>
         </div>

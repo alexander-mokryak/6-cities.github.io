@@ -105,3 +105,8 @@ export enum SubmitStatus {
   Fullfilled = 'FULLFILLED',
   Rejected = 'REJECTED'
 }
+
+export const getRandomElement = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
+
+export const INVALID_PASSWORD_MESSAGE = 'Password should contains at least one letter and digit';
+export const VALID_PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
