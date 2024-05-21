@@ -7,9 +7,11 @@ import Spinner from '../spinner/spinner';
 
 interface IPrivateRouteProps {
   children: JSX.Element;
+  restrictedFor: AuthorizationStatus;
+  redirectTo: AppRoute;
 }
 
-const PrivateRoute = ({children}: IPrivateRouteProps): JSX.Element => {
+const PrivateRoute = ({children, restrictedFor, redirectTo}: IPrivateRouteProps): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
@@ -17,7 +19,7 @@ const PrivateRoute = ({children}: IPrivateRouteProps): JSX.Element => {
   }
 
   return(
-    authorizationStatus === AuthorizationStatus.Auth ? children : <Navigate to={AppRoute.Login}/>
+    authorizationStatus !== restrictedFor ? children : <Navigate to={redirectTo}/>
   );
 };
 

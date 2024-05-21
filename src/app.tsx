@@ -9,7 +9,7 @@ import Favorites from './pages/favorites/Favorites';
 import Room from './pages/room/room';
 import NotFound from './pages/not-found/not-found';
 
-import {AppRoute} from './const';
+import {AppRoute, AuthorizationStatus} from './const';
 import PrivateRoute from './components/private-route/private-route';
 
 function App(): JSX.Element {
@@ -23,12 +23,16 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={<Login/>}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Main}>
+                <Login/>
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute>
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Login}>
                 <Favorites/>
               </PrivateRoute>
             }
