@@ -11,11 +11,11 @@ import {capitalize, getStarsWidth, pluralize} from '../../utils';
 import {CommentAuth} from '../../types/types';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {
-  getComments,
   getCommentStatus,
   getIsOfferLoading,
   getNearbyOffers,
-  getOffer
+  getOffer,
+  selectComments
 } from '../../store/site-data/selectors';
 import Bookmark from '../../components/bookmark/bookmark';
 
@@ -26,7 +26,7 @@ const Room = (): JSX.Element | null => {
   const isOfferLoading = useAppSelector(getIsOfferLoading);
   const offer = useAppSelector(getOffer);
   const nearbyOffers = useAppSelector(getNearbyOffers);
-  const comments = useAppSelector(getComments);
+  const comments = useAppSelector(selectComments);
   const commentStatus = useAppSelector(getCommentStatus);
 
   useEffect(() => {
