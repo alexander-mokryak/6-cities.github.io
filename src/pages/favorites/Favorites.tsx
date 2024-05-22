@@ -16,8 +16,7 @@ const Favorites = ():JSX.Element => {
   }
 
   return(
-    <div className={'page'}>
-      <Header/>
+    <>
       <main className={`page__main page__main--favorites ${favoriteOffers.length === 0 ? 'page__main--favorites-empty' : ''}`}>
         <div className={'page__favorites-container container'}>
           {favoriteOffers.length > 0 ? (
@@ -35,7 +34,7 @@ const Favorites = ():JSX.Element => {
           <img className={'footer__logo'} src={'img/logo.svg'} alt={'6 cities logo'} width={'64'} height={'33'} />
         </Link>
       </footer>
-    </div>
+    </>
   );
 };
 

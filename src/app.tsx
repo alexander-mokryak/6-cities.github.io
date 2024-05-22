@@ -9,39 +9,42 @@ import NotFound from './pages/not-found/not-found';
 
 import {AppRoute, AuthorizationStatus} from './const';
 import PrivateRoute from './components/private-route/private-route';
+import Header from './components/header/header';
 
 function App(): JSX.Element {
   return (
     <HistoryRouter history={history}>
       <Routes>
-        <Route
-          index
-          element={<Main/>}
-        />
-        <Route
-          path={AppRoute.Login}
-          element={
-            <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Main}>
-              <Login/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Login}>
-              <Favorites/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Room}
-          element={<Room/>}
-        />
-        <Route
-          path={AppRoute.NotFound}
-          element={<NotFound/>}
-        />
+        <Route element={<Header />}>
+          <Route
+            index
+            element={<Main/>}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Main}>
+                <Login/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Login}>
+                <Favorites/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Room}
+            element={<Room/>}
+          />
+          <Route
+            path={AppRoute.NotFound}
+            element={<NotFound/>}
+          />
+        </Route>
       </Routes>
     </HistoryRouter>
   );
