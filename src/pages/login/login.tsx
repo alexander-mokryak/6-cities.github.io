@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../../components/header/header';
 import type {FormEvent} from 'react';
 import {CityName, UserAuth} from '../../types/types';
 import {useAppDispatch} from '../../hooks';
@@ -9,15 +8,19 @@ import {Link} from 'react-router-dom';
 import {setCity} from '../../store/site-process/site-process';
 import {toast} from 'react-toastify';
 
+interface loginForm {
+  email: string;
+  password: string;
+}
+
 export default function Login () {
   const dispatch = useAppDispatch();
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-
     const formData = new FormData(form) as Iterable<[UserAuth]>;
-    const data = Object.fromEntries(formData);
+    const data = Object.fromEntries(formData) as loginForm;
 
     if (!data.password.match(VALID_PASSWORD_REGEXP)) {
       toast.warn(INVALID_PASSWORD_MESSAGE);

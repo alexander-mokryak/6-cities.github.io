@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../../components/header/header';
 import FavoriteList from '../../components/favorite-list/favorite-list';
 import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
